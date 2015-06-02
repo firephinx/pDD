@@ -1,1 +1,13 @@
-#define USE_CUDA 1
+/**
+* settings.h
+*/
+
+#pragma once
+
+#include <string.h>
+#include <string>
+
+namespace pDD
+{
+
+}

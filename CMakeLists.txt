@@ -6,8 +6,9 @@ project(pdd)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roscpp
-  rospy
-  std_msgs
+  cv_bridge
+  OpenCV
+  image_transport
   message_generation
 )
 
@@ -48,14 +49,14 @@ catkin_python_setup()
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
- add_message_files(
-   FILES
- )
+#add_message_files(
+#  FILES
+#)
 
 ## Generate services in the 'srv' folder
- add_service_files(
-   FILES
- )
+#add_service_files(
+#  FILES
+#)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -65,10 +66,10 @@ catkin_python_setup()
 # )
 
 ## Generate added messages and services with any dependencies listed here
- generate_messages(
-   DEPENDENCIES
-   std_msgs
- )
+#generate_messages(
+#  DEPENDENCIES
+#  std_msgs
+#)
 
 ###################################
 ## catkin specific configuration ##
@@ -82,7 +83,7 @@ catkin_python_setup()
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES pdd
-  CATKIN_DEPENDS roscpp rospy std_msgs message_runtime
+  CATKIN_DEPENDS roscpp std_msgs message_runtime cv_bridge
   DEPENDS system_lib
 )
 
@@ -96,6 +97,11 @@ catkin_package(
 include_directories(
   ${catkin_INCLUDE_DIRS}
 )
+
+include_directories(include ${OpenCV_INCLUDE_DIRS})
+include_directories( ${OpenCV_INCLUDE_DIR} )
+include_directories( ${Boost_INCLUDE_DIR} )
+include_directories( ${EIGEN_INCLUDE_DIR} )
 
 ## Declare a cpp library
 # add_library(pdd
@@ -147,6 +153,9 @@ include_directories(
 #   # myfile2
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
+
+add_executable(pdd src/main.cpp)
+target_link_libraries(pdd ${catkin_LIBRARIES})
 
 #############
 ## Testing ##
